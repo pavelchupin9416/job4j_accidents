@@ -17,6 +17,29 @@
     <div class="container mt-2">
         <h3>Проект job4j_accidents, выполняемый в рамках курса Job4j</h3>
     </div>
+    <div class="container">
+        <div class="row">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Номер</th>
+                    <th scope="col">Описание</th>
+                    <th scope="col">Адрес</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="accident: ${accidents}">
+                    <td th:text="${accident.id}" />
+                    <td th:text="${accident.name}" />
+                    <td th:text="${accident.text}" />
+                    <td th:text="${accident.address}" />
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
     <footer th:insert="blocks/footer :: footer"></footer>
 </div>
 </body>
