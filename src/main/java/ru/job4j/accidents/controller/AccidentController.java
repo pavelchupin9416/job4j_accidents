@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import ru.job4j.accidents.model.Accident;
 import ru.job4j.accidents.service.AccidentService;
 
@@ -35,8 +36,8 @@ public class AccidentController {
         return "redirect:/index";
     }
 
-    @GetMapping("/{id}")
-    public String getById(Model model, @PathVariable int id) {
+    @GetMapping("/formUpdateAccident")
+    public String getById(@RequestParam("id") int id, Model model) {
         var accidentOptional = accidents.findById(id);
         if (accidentOptional.isEmpty()) {
             model.addAttribute("message", "Инцидент с указанным идентификатором не найдена");
