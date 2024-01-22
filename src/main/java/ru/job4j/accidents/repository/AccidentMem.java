@@ -2,6 +2,7 @@ package ru.job4j.accidents.repository;
 
 import org.springframework.stereotype.Repository;
 import ru.job4j.accidents.model.Accident;
+import ru.job4j.accidents.model.AccidentType;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -15,10 +16,10 @@ public class AccidentMem implements AccidentRepository {
     private final Map<Integer, Accident> accidents = new HashMap<>();
 
     private AccidentMem() {
-        save(new Accident(0, "T567DF", "Задел бампер", "г. Пенза ул. Байдукова"));
-        save(new Accident(0, "M9456FD", "Разбита фара", "г. Пенза ул. Горная"));
-        save(new Accident(0, "U455GF", "Парковка на газоне", "г. Пенза ул. Нейтральная"));
-        save(new Accident(0, "O745VD", "Проезд на красный", "г. Пенза ул. Рябова"));
+        save(new Accident(0, "T567DF", "Задел бампер", "г. Пенза ул. Байдукова", new AccidentType(1, "Две машины")));
+        save(new Accident(0, "M9456FD", "Разбита фара", "г. Пенза ул. Горная",new AccidentType(2, "Машина и человек")));
+        save(new Accident(0, "U455GF", "Парковка на газоне", "г. Пенза ул. Нейтральная",new AccidentType(3, "Машина и велосипед")));
+        save(new Accident(0, "O745VD", "Проезд на красный", "г. Пенза ул. Рябова",new AccidentType(1, "Две машины")));
     }
 
     @Override
@@ -37,7 +38,7 @@ public class AccidentMem implements AccidentRepository {
     @Override
     public boolean update(Accident accident) {
         return accidents.computeIfPresent(accident.getId(), (id, oldAccident) -> new Accident(oldAccident.getId(),
-                accident.getName(), accident.getText(), accident.getAddress())) != null;
+                accident.getName(), accident.getText(), accident.getAddress(), accident.getType())) != null;
     }
 
     @Override

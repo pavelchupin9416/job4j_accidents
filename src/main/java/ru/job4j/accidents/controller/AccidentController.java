@@ -11,7 +11,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.job4j.accidents.model.Accident;
+import ru.job4j.accidents.model.AccidentType;
 import ru.job4j.accidents.service.AccidentService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @AllArgsConstructor
@@ -26,7 +30,12 @@ public class AccidentController {
     }
 
     @GetMapping("/createAccident")
-    public String viewCreateAccident() {
+    public String viewCreateAccident(Model model) {
+        List<AccidentType> types = new ArrayList<>();
+        types.add(new AccidentType(1, "Две машины"));
+        types.add(new AccidentType(2, "Машина и человек"));
+        types.add(new AccidentType(3, "Машина и велосипед"));
+        model.addAttribute("types", types);
         return "createAccident";
     }
 
@@ -43,6 +52,11 @@ public class AccidentController {
             model.addAttribute("message", "Инцидент с указанным идентификатором не найдена");
             return "errors/404";
         }
+        List<AccidentType> types = new ArrayList<>();
+        types.add(new AccidentType(1, "Две машины"));
+        types.add(new AccidentType(2, "Машина и человек"));
+        types.add(new AccidentType(3, "Машина и велосипед"));
+        model.addAttribute("types", types);
         model.addAttribute("accident", accidentOptional.get());
         return "editAccident";
     }
