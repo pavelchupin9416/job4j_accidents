@@ -5,6 +5,8 @@
             <div class="collapse navbar-collapse">
                 <div class="navbar-nav mr-auto mt-2 mt-lg-0">
                     <a class="nav-item nav-link active" href="/index">Главная</a>
+                    <a class="nav-item nav-link active" th:href="@{/accidents}">Инциденты</a>
+                    <a class="nav-item nav-link active" th:href="@{/accidents/createAccident}">Добавить Инцидент</a>
                 </div>
                 <div class="navbar-nav my-2 my-lg-0" >
                     <a class="nav-link text-secondary me-3" href="#" th:text="${user}"></a>
@@ -12,3 +14,4 @@
         </div>
     </nav>
 </div>
+
