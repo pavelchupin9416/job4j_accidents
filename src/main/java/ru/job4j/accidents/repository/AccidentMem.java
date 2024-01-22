@@ -17,9 +17,9 @@ public class AccidentMem implements AccidentRepository {
 
     private AccidentMem() {
         save(new Accident(0, "T567DF", "Задел бампер", "г. Пенза ул. Байдукова", new AccidentType(1, "Две машины")));
-        save(new Accident(0, "M9456FD", "Разбита фара", "г. Пенза ул. Горная",new AccidentType(2, "Машина и человек")));
-        save(new Accident(0, "U455GF", "Парковка на газоне", "г. Пенза ул. Нейтральная",new AccidentType(3, "Машина и велосипед")));
-        save(new Accident(0, "O745VD", "Проезд на красный", "г. Пенза ул. Рябова",new AccidentType(1, "Две машины")));
+        save(new Accident(0, "M9456FD", "Разбита фара", "г. Пенза ул. Горная", new AccidentType(2, "Машина и человек")));
+        save(new Accident(0, "U455GF", "Парковка на газоне", "г. Пенза ул. Нейтральная", new AccidentType(3, "Машина и велосипед")));
+        save(new Accident(0, "O745VD", "Проезд на красный", "г. Пенза ул. Рябова", new AccidentType(1, "Две машины")));
     }
 
     @Override
