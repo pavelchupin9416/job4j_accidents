@@ -15,11 +15,14 @@ public class AccidentMem implements AccidentRepository {
     private AtomicInteger nextId = new AtomicInteger(0);
     private final Map<Integer, Accident> accidents = new HashMap<>();
 
-    private AccidentMem() {
-        save(new Accident(0, "T567DF", "Задел бампер", "г. Пенза ул. Байдукова", new AccidentType(1, "Две машины")));
-        save(new Accident(0, "M9456FD", "Разбита фара", "г. Пенза ул. Горная", new AccidentType(2, "Машина и человек")));
-        save(new Accident(0, "U455GF", "Парковка на газоне", "г. Пенза ул. Нейтральная", new AccidentType(3, "Машина и велосипед")));
-        save(new Accident(0, "O745VD", "Проезд на красный", "г. Пенза ул. Рябова", new AccidentType(1, "Две машины")));
+    private final AccidentTypeRepository accidentTypeRepository;
+
+    private AccidentMem(AccidentTypeRepository accidentTypeRepository) {
+        this.accidentTypeRepository = accidentTypeRepository;
+        save(new Accident(0, "T567DF", "Задел бампер", "г. Пенза ул. Байдукова", accidentTypeRepository.findById(1).get()));
+        save(new Accident(0, "M9456FD", "Разбита фара", "г. Пенза ул. Горная", accidentTypeRepository.findById(2).get()));
+        save(new Accident(0, "U455GF", "Парковка на газоне", "г. Пенза ул. Нейтральная", accidentTypeRepository.findById(3).get()));
+        save(new Accident(0, "O745VD", "Проезд на красный", "г. Пенза ул. Рябова", accidentTypeRepository.findById(1).get()));
     }
 
     @Override
