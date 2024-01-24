@@ -11,13 +11,13 @@ import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Repository
-public class AccidentTypeMem implements AccidentTypeRepository{
+public class AccidentTypeMem implements AccidentTypeRepository {
     private AtomicInteger nextId = new AtomicInteger(0);
     private final Map<Integer, AccidentType> accidentTypes = new HashMap<>();
 
     private AccidentTypeMem() {
         save(new AccidentType(1, "Две машины"));
-        save( new AccidentType(2, "Машина и человек"));
+        save(new AccidentType(2, "Машина и человек"));
         save(new AccidentType(3, "Машина и велосипед"));
     }
 

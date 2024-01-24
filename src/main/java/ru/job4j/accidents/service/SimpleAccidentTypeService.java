@@ -10,7 +10,7 @@ import java.util.Collection;
 import java.util.Optional;
 
 @Service
-public class SimpleAccidentTypeService implements  AccidentTypeService{
+public class SimpleAccidentTypeService implements  AccidentTypeService {
     private final AccidentTypeRepository accidentTypeRepository;
 
     public SimpleAccidentTypeService(AccidentTypeRepository accidentTypeRepository) {

@@ -14,7 +14,9 @@ import ru.job4j.accidents.model.Accident;
 import ru.job4j.accidents.model.AccidentType;
 import ru.job4j.accidents.service.AccidentService;
 import ru.job4j.accidents.service.AccidentTypeService;
+import ru.job4j.accidents.service.RuleService;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +26,7 @@ import java.util.List;
 public class AccidentController {
     private final AccidentService accidents;
     private final AccidentTypeService accidentTypes;
+    private final RuleService rules;
 
     @GetMapping
     public String getAll(Model model) {
@@ -34,12 +37,14 @@ public class AccidentController {
     @GetMapping("/createAccident")
     public String viewCreateAccident(Model model) {
         model.addAttribute("types",  accidentTypes.findAll());
+        model.addAttribute("rules",  rules.findAll());
         return "createAccident";
     }
 
     @PostMapping("/createAccident")
-    public String save(@ModelAttribute Accident accident) {
-        accidents.save(accident);
+    public String save(@ModelAttribute Accident accident, HttpServletRequest req) {
+        String[] ids = req.getParameterValues("rIds");
+        accidents.save(accident, ids);
         return "redirect:/index";
     }
 
@@ -51,13 +56,15 @@ public class AccidentController {
             return "errors/404";
         }
         model.addAttribute("types", accidentTypes.findAll());
+        model.addAttribute("rules",  rules.findAll());
         model.addAttribute("accident", accidentOptional.get());
         return "editAccident";
     }
 
     @PostMapping("/update")
-    public String update(@ModelAttribute Accident accident, Model model) {
-            var isUpdated = accidents.update(accident);
+    public String update(@ModelAttribute Accident accident, Model model, HttpServletRequest req) {
+            String[] ids = req.getParameterValues("rIds");
+            var isUpdated = accidents.update(accident, ids);
             if (!isUpdated) {
                 model.addAttribute("message", "Инцидент с указанным идентификатором не найдена");
                 return "errors/404";

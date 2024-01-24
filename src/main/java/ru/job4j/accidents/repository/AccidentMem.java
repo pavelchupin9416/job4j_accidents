@@ -8,6 +8,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Repository
@@ -16,13 +17,19 @@ public class AccidentMem implements AccidentRepository {
     private final Map<Integer, Accident> accidents = new HashMap<>();
 
     private final AccidentTypeRepository accidentTypeRepository;
+    private final RuleRepository ruleRepository;
 
-    private AccidentMem(AccidentTypeRepository accidentTypeRepository) {
+    private AccidentMem(AccidentTypeRepository accidentTypeRepository, RuleRepository ruleRepository) {
         this.accidentTypeRepository = accidentTypeRepository;
-        save(new Accident(0, "T567DF", "Задел бампер", "г. Пенза ул. Байдукова", accidentTypeRepository.findById(1).get()));
-        save(new Accident(0, "M9456FD", "Разбита фара", "г. Пенза ул. Горная", accidentTypeRepository.findById(2).get()));
-        save(new Accident(0, "U455GF", "Парковка на газоне", "г. Пенза ул. Нейтральная", accidentTypeRepository.findById(3).get()));
-        save(new Accident(0, "O745VD", "Проезд на красный", "г. Пенза ул. Рябова", accidentTypeRepository.findById(1).get()));
+        this.ruleRepository = ruleRepository;
+        save(new Accident(0, "T567DF", "Задел бампер", "г. Пенза ул. Байдукова", accidentTypeRepository.findById(1).get(),
+                Set.of(ruleRepository.findById(1).get(), ruleRepository.findById(2).get())));
+        save(new Accident(0, "M9456FD", "Разбита фара", "г. Пенза ул. Горная", accidentTypeRepository.findById(2).get(),
+                Set.of(ruleRepository.findById(1).get(), ruleRepository.findById(3).get())));
+        save(new Accident(0, "U455GF", "Парковка на газоне", "г. Пенза ул. Нейтральная", accidentTypeRepository.findById(3).get(),
+                Set.of(ruleRepository.findById(2).get())));
+        save(new Accident(0, "O745VD", "Проезд на красный", "г. Пенза ул. Рябова", accidentTypeRepository.findById(1).get(),
+                Set.of(ruleRepository.findById(1).get())));
     }
 
     @Override
@@ -41,7 +48,7 @@ public class AccidentMem implements AccidentRepository {
     @Override
     public boolean update(Accident accident) {
         return accidents.computeIfPresent(accident.getId(), (id, oldAccident) -> new Accident(oldAccident.getId(),
-                accident.getName(), accident.getText(), accident.getAddress(), accident.getType())) != null;
+                accident.getName(), accident.getText(), accident.getAddress(), accident.getType(), accident.getRules())) != null;
     }
 
     @Override
