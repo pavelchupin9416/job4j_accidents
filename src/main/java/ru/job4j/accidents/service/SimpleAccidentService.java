@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import ru.job4j.accidents.model.Accident;
 import ru.job4j.accidents.model.Rule;
 import ru.job4j.accidents.repository.AccidentRepository;
+import ru.job4j.accidents.repository.RuleRepository;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -14,25 +15,18 @@ import java.util.Set;
 @Service
 public class SimpleAccidentService implements AccidentService {
     private final AccidentRepository accidentRepository;
+    private final RuleRepository ruleRepository;
 
-    public SimpleAccidentService(AccidentRepository accidentRepository) {
+    public SimpleAccidentService(AccidentRepository accidentRepository, RuleRepository ruleRepository) {
         this.accidentRepository = accidentRepository;
+        this.ruleRepository = ruleRepository;
     }
 
-    public Accident setRule(Accident accident, String[] ids) {
-        Set<Rule> rules = new HashSet<>();
-        for (String id : ids) {
-            Rule rule = new Rule();
-            rule.setId(Integer.parseInt(id));
-            rules.add(rule);
-        }
-        accident.setRules(rules);
-        return accident;
-    }
 
     @Override
     public Accident save(Accident accident, String[] ids) {
-        return accidentRepository.save(setRule(accident, ids));
+        accident.setRules(ruleRepository.getSetRule(ids));
+        return accidentRepository.save(accident);
     }
 
     @Override
@@ -42,8 +36,8 @@ public class SimpleAccidentService implements AccidentService {
 
     @Override
     public boolean update(Accident accident, String[] ids) {
-
-        return accidentRepository.update(setRule(accident, ids));
+        accident.setRules(ruleRepository.getSetRule(ids));
+        return accidentRepository.update(accident);
     }
 
     @Override
