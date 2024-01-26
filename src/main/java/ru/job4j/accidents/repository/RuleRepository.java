@@ -18,5 +18,5 @@ public interface RuleRepository {
 
     Collection<Rule> findAll();
 
-    Set<Rule> getSetRule(String[] ids);
+    Set<Rule> findRuleByIds(String[] ids);
 }

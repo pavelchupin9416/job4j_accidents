@@ -54,7 +54,7 @@ public class RuleMem implements RuleRepository {
     }
 
     @Override
-    public Set<Rule> getSetRule(String[] ids) {
+    public Set<Rule> findRuleByIds(String[] ids) {
         return Arrays.stream(ids)
                 .map(x -> rules.get(Integer.parseInt(x)))
                 .collect(Collectors.toSet());

@@ -25,7 +25,7 @@ public class SimpleAccidentService implements AccidentService {
 
     @Override
     public Accident save(Accident accident, String[] ids) {
-        accident.setRules(ruleRepository.getSetRule(ids));
+        accident.setRules(ruleRepository.findRuleByIds(ids));
         return accidentRepository.save(accident);
     }
 
@@ -36,7 +36,7 @@ public class SimpleAccidentService implements AccidentService {
 
     @Override
     public boolean update(Accident accident, String[] ids) {
-        accident.setRules(ruleRepository.getSetRule(ids));
+        accident.setRules(ruleRepository.findRuleByIds(ids));
         return accidentRepository.update(accident);
     }
 
