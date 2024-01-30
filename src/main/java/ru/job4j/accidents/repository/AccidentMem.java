@@ -11,7 +11,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
-@Repository
+
 public class AccidentMem implements AccidentRepository {
     private AtomicInteger nextId = new AtomicInteger(0);
     private final Map<Integer, Accident> accidents = new HashMap<>();
